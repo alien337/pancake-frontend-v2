@@ -23,27 +23,23 @@ export enum Rounding {
   ROUND_UP,
 }
 
-export const FACTORY_ADDRESS = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
-
 // // TODO: ETH This is test version, do not depends on it
 const FACTORY_ADDRESS_ETH = '0xD93801d7D3a368D94A3A32E97A20f7aC1948a5dB'
-
 export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
   [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
   [ChainId.GOERLI]: FACTORY_ADDRESS_ETH,
-  [ChainId.BSC]: FACTORY_ADDRESS,
-  [ChainId.BSC_TESTNET]: '0x6725f303b657a9451d8ba641348b6761a6cc7a17',
+  [ChainId.BSC]: '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73',
+  [ChainId.BSC_TESTNET]: '0x5Fe5cC0122403f06abE2A75DBba1860Edb762985',
 }
-export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'
 
 const INIT_CODE_HASH_ETH = '0x57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d'
 export const INIT_CODE_HASH_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: INIT_CODE_HASH_ETH,
   [ChainId.RINKEBY]: INIT_CODE_HASH_ETH,
   [ChainId.GOERLI]: INIT_CODE_HASH_ETH,
-  [ChainId.BSC]: INIT_CODE_HASH,
-  [ChainId.BSC_TESTNET]: '0xd0d4c4cd0848c93cb4fd1f498d7013ee6bfb25783ea21593d5834f5d250ece66',
+  [ChainId.BSC]: '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5',
+  [ChainId.BSC_TESTNET]: '0xbb600ba95884f2c2837114fd2f157d00137e0b65b0fe5226523d720e4a4ce539',
 }
 
 export const MINIMUM_LIQUIDITY = JSBI.BigInt(1000)
@@ -101,7 +97,7 @@ export const WETH9 = {
 export const WBNB = {
   [ChainId.ETHEREUM]: new Token(
     ChainId.ETHEREUM,
-    '0x418D75f65a02b3D53B2418FB8E1fe493759c7605',
+    '0xE282a15DBad45e3131620C1b8AF85B7330Cb3b4B',
     18,
     'WBNB',
     'Wrapped BNB',
@@ -117,7 +113,7 @@ export const WBNB = {
   ),
   [ChainId.BSC_TESTNET]: new Token(
     ChainId.BSC_TESTNET,
-    '0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd',
+    '0x0dE8FCAE8421fc79B29adE9ffF97854a424Cad09',
     18,
     'WBNB',
     'Wrapped BNB',

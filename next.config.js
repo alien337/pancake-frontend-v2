@@ -24,7 +24,7 @@ const sentryWebpackPluginOptions =
       }
     : {
         silent: true, // Suppresses all logs
-        dryRun: !process.env.SENTRY_AUTH_TOKEN,
+        // dryRun: !process.env.SENTRY_AUTH_TOKEN,
       }
 
 /** @type {import('next').NextConfig} */
@@ -147,5 +147,9 @@ const config = {
 }
 
 module.exports = withBundleAnalyzer(
-  withVanillaExtract(withSentryConfig(withTM(withAxiom(config)), sentryWebpackPluginOptions)),
+  withVanillaExtract(
+    process.env.SENTRY_AUTH_TOKEN
+      ? withSentryConfig(withTM(withAxiom(config)), sentryWebpackPluginOptions)
+      : withTM(withAxiom(config)),
+  ),
 )

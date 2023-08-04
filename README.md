@@ -30,3 +30,25 @@ yarn build
 # start the application after build
 yarn start
 ```
+
+## Adding New Chain
+
+### Config dex contracts:
+
+- Update `ROUTER_ADDRESS` in `src/config/constants/exchange.ts`
+- Update `INIT_CODE_HASH`, `FACTORY_ADDRESS`, `WETH` in `packages/swap-sdk/src/constants.ts`
+
+
+### Add chain to Selection Network
+
+- Enable chain in file `src/utils/wagmi.ts`
+- Update file `src/components/NetworkSwitcher.tsx`
+
+
+### Edit sources and addresses of tokens
+
+- Custom sources in `src/config/constants/lists.ts`
+- Extra config for exchange in `src/config/constants/exchange.ts`
+- Tokens management: All the tokens are in `/packages/tokens/src/[chainId].ts`. To add a Token to the exchange lists:
+	+ For the default list: `/config/constant/tokenLists/pancake-default.tokenlist.json`
+	+ To blacklist a token: `/config/constant/tokenListspancake-unsupported.tokenlist.json`
