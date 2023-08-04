@@ -117,9 +117,9 @@ export const NetworkSwitcher = () => {
 
   const cannotChangeNetwork = !canSwitch
 
-  if (!chainId || chainId === ChainId.BSC) {
-    return null
-  }
+  // if (!chainId || chainId === ChainId.BSC) {
+  //   return null
+  // }
 
   return (
     <>
