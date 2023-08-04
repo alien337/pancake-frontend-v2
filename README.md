@@ -52,3 +52,19 @@ yarn start
 - Tokens management: All the tokens are in `/packages/tokens/src/[chainId].ts`. To add a Token to the exchange lists:
 	+ For the default list: `/config/constant/tokenLists/pancake-default.tokenlist.json`
 	+ To blacklist a token: `/config/constant/tokenListspancake-unsupported.tokenlist.json`
+
+## Deploy to Vercel
+
+### Web
+
+- Build & Development Settings:
+    + Build Command: `yarn build`
+    + Install Command: `yarn install`
+- Root Directory: empty
+
+### Bridge app
+
+- Build & Development Settings:
+    + Build Command: `cd ../.. && turbo run build --filter={/apps/bridge}...`
+    + Install Command: `yarn install`
+- Root Directory: `apps/bridge`
