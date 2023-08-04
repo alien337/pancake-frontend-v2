@@ -33,14 +33,6 @@ const addressCount = 4425459
 const tvl = 6082955532.115718
 
 export const getStaticProps: GetStaticProps = async () => {
-  const totalTxQuery = gql`
-    query TotalTransactions($id: ID!, $block: Block_height) {
-      pancakeFactory(id: $id, block: $block) {
-        totalTransactions
-      }
-    }
-  `
-
   const days30Ago = sub(new Date(), { days: 30 })
 
   const results = {
@@ -49,65 +41,71 @@ export const getStaticProps: GetStaticProps = async () => {
     tvl,
   }
 
-  if (process.env.SF_HEADER) {
-    try {
-      const [days30AgoBlock] = await getBlocksFromTimestamps([getUnixTime(days30Ago)])
+  // if (process.env.SF_HEADER) {
+  //   try {
+  //     const totalTxQuery = gql`
+  //       query TotalTransactions($id: ID!, $block: Block_height) {
+  //         pancakeFactory(id: $id, block: $block) {
+  //           totalTransactions
+  //         }
+  //       }
+  //     `
+  //     const [days30AgoBlock] = await getBlocksFromTimestamps([getUnixTime(days30Ago)])
 
-      if (!days30AgoBlock) {
-        throw new Error('No block found for 30 days ago')
-      }
+  //     if (!days30AgoBlock) {
+  //       throw new Error('No block found for 30 days ago')
+  //     }
 
-      const totalTx = await infoServerClient.request(totalTxQuery, {
-        id: DEFAULT_FACTORY_ADDRESS,
-      })
-      const totalTx30DaysAgo = await infoServerClient.request(totalTxQuery, {
-        block: {
-          number: days30AgoBlock.number,
-        },
-        id: DEFAULT_FACTORY_ADDRESS,
-      })
+  //     const totalTx = await infoServerClient.request(totalTxQuery, {
+  //       id: DEFAULT_FACTORY_ADDRESS,
+  //     })
+  //     const totalTx30DaysAgo = await infoServerClient.request(totalTxQuery, {
+  //       block: {
+  //         number: days30AgoBlock.number,
+  //       },
+  //       id: DEFAULT_FACTORY_ADDRESS,
+  //     })
 
-      if (
-        totalTx?.pancakeFactory?.totalTransactions &&
-        totalTx30DaysAgo?.pancakeFactory?.totalTransactions &&
-        parseInt(totalTx.pancakeFactory.totalTransactions) > parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
-      ) {
-        results.totalTx30Days =
-          parseInt(totalTx.pancakeFactory.totalTransactions) -
-          parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
-      }
-    } catch (error) {
-      if (process.env.NODE_ENV === 'production') {
-        console.error('Error when fetching total tx count', error)
-      }
-    }
-  }
+  //     if (
+  //       totalTx?.pancakeFactory?.totalTransactions &&
+  //       totalTx30DaysAgo?.pancakeFactory?.totalTransactions &&
+  //       parseInt(totalTx.pancakeFactory.totalTransactions) > parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
+  //     ) {
+  //       results.totalTx30Days =
+  //         parseInt(totalTx.pancakeFactory.totalTransactions) -
+  //         parseInt(totalTx30DaysAgo.pancakeFactory.totalTransactions)
+  //     }
+  //   } catch (error) {
+  //     if (process.env.NODE_ENV === 'production') {
+  //       console.error('Error when fetching total tx count', error)
+  //     }
+  //   }
+  // }
 
-  const usersQuery = gql`
-    query userCount($since: ISO8601DateTime, $till: ISO8601DateTime) {
-      ethereum(network: bsc) {
-        dexTrades(exchangeName: { in: ["Pancake", "Pancake v2"] }, date: { since: $since, till: $till }) {
-          count(uniq: senders)
-        }
-      }
-    }
-  `
-
-  if (process.env.BIT_QUERY_HEADER) {
-    try {
-      const result = await bitQueryServerClient.request(usersQuery, {
-        since: days30Ago.toISOString(),
-        till: new Date().toISOString(),
-      })
-      if (result?.ethereum?.dexTrades?.[0]?.count) {
-        results.addressCount30Days = result.ethereum.dexTrades[0].count
-      }
-    } catch (error) {
-      if (process.env.NODE_ENV === 'production') {
-        console.error('Error when fetching address count', error)
-      }
-    }
-  }
+  // if (process.env.BIT_QUERY_HEADER) {
+  //   try {
+  //     const usersQuery = gql`
+  //       query userCount($since: ISO8601DateTime, $till: ISO8601DateTime) {
+  //         ethereum(network: bsc) {
+  //           dexTrades(exchangeName: { in: ["Pancake", "Pancake v2"] }, date: { since: $since, till: $till }) {
+  //             count(uniq: senders)
+  //           }
+  //         }
+  //       }
+  //     `
+  //     const result = await bitQueryServerClient.request(usersQuery, {
+  //       since: days30Ago.toISOString(),
+  //       till: new Date().toISOString(),
+  //     })
+  //     if (result?.ethereum?.dexTrades?.[0]?.count) {
+  //       results.addressCount30Days = result.ethereum.dexTrades[0].count
+  //     }
+  //   } catch (error) {
+  //     if (process.env.NODE_ENV === 'production') {
+  //       console.error('Error when fetching address count', error)
+  //     }
+  //   }
+  // }
 
   // try {
   //   const result = await infoServerClient.request(gql`

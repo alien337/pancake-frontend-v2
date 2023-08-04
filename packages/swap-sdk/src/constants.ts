@@ -6,7 +6,6 @@ export type BigintIsh = JSBI | number | string
 
 export enum ChainId {
   ETHEREUM = 1,
-  RINKEBY = 4,
   GOERLI = 5,
   BSC = 56,
   BSC_TESTNET = 97,
@@ -29,7 +28,6 @@ export const DEFAULT_FACTORY_ADDRESS = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c
 const FACTORY_ADDRESS_ETH = '0xD93801d7D3a368D94A3A32E97A20f7aC1948a5dB'
 export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
-  [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
   [ChainId.GOERLI]: FACTORY_ADDRESS_ETH,
   [ChainId.BSC]: DEFAULT_FACTORY_ADDRESS,
   [ChainId.BSC_TESTNET]: '0x5Fe5cC0122403f06abE2A75DBba1860Edb762985',
@@ -38,7 +36,6 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
 const INIT_CODE_HASH_ETH = '0x57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d'
 export const INIT_CODE_HASH_MAP: Record<number, string> = {
   [ChainId.ETHEREUM]: INIT_CODE_HASH_ETH,
-  [ChainId.RINKEBY]: INIT_CODE_HASH_ETH,
   [ChainId.GOERLI]: INIT_CODE_HASH_ETH,
   [ChainId.BSC]: '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5',
   [ChainId.BSC_TESTNET]: '0xbb600ba95884f2c2837114fd2f157d00137e0b65b0fe5226523d720e4a4ce539',
@@ -73,14 +70,6 @@ export const WETH9 = {
   [ChainId.ETHEREUM]: new Token(
     ChainId.ETHEREUM,
     '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2',
-    18,
-    'WETH',
-    'Wrapped Ether',
-    'https://weth.io'
-  ),
-  [ChainId.RINKEBY]: new Token(
-    ChainId.RINKEBY,
-    '0xc778417E063141139Fce010982780140Aa0cD5Ab',
     18,
     'WETH',
     'Wrapped Ether',
@@ -125,7 +114,6 @@ export const WBNB = {
 
 export const WNATIVE: Record<number, Token> = {
   [ChainId.ETHEREUM]: WETH9[ChainId.ETHEREUM],
-  [ChainId.RINKEBY]: WETH9[ChainId.RINKEBY],
   [ChainId.GOERLI]: WETH9[ChainId.GOERLI],
   [ChainId.BSC]: WBNB[ChainId.BSC],
   [ChainId.BSC_TESTNET]: WBNB[ChainId.BSC_TESTNET],
@@ -140,7 +128,6 @@ export const NATIVE: Record<
   }
 > = {
   [ChainId.ETHEREUM]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
-  [ChainId.RINKEBY]: { name: 'Rinkeby Ether', symbol: 'RIN', decimals: 18 },
   [ChainId.GOERLI]: { name: 'Goerli Ether', symbol: 'GOR', decimals: 18 },
   [ChainId.BSC]: {
     name: 'Binance Chain Native Token',
