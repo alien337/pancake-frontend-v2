@@ -11,7 +11,7 @@ export const CAKE_MAINNET = new Token(
 
 export const CAKE_TESTNET = new Token(
   ChainId.BSC_TESTNET,
-  '0xFa60D973F7642B748046464e165A65B7323b0DEE',
+  '0xB8F5B50ed77596b5E638359d828000747bb3dd89',
   18,
   'CAKE',
   'PancakeSwap Token',
@@ -83,7 +83,7 @@ export const BUSD_BSC = new Token(
 
 export const BUSD_TESTNET = new Token(
   ChainId.BSC_TESTNET,
-  '0x8516Fc284AEEaa0374E66037BD2309349FF728eA',
+  '0xE0dFffc2E01A7f051069649aD4eb3F518430B6a4',
   18,
   'BUSD',
   'Binance USD',

@@ -109,27 +109,27 @@ export const getStaticProps: GetStaticProps = async () => {
     }
   }
 
-  try {
-    const result = await infoServerClient.request(gql`
-      query tvl {
-        pancakeFactories(first: 1) {
-          totalLiquidityUSD
-        }
-        token(id: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82") {
-          derivedUSD
-        }
-      }
-    `)
-    const { totalLiquidityUSD } = result.pancakeFactories[0]
-    const cakeVaultV2 = getCakeVaultAddress()
-    const cakeContract = getCakeContract()
-    const totalCakeInVault = await cakeContract.balanceOf(cakeVaultV2)
-    results.tvl = parseFloat(formatEther(totalCakeInVault)) * result.token.derivedUSD + parseFloat(totalLiquidityUSD)
-  } catch (error) {
-    if (process.env.NODE_ENV === 'production') {
-      console.error('Error when fetching tvl stats', error)
-    }
-  }
+  // try {
+  //   const result = await infoServerClient.request(gql`
+  //     query tvl {
+  //       pancakeFactories(first: 1) {
+  //         totalLiquidityUSD
+  //       }
+  //       token(id: "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82") {
+  //         derivedUSD
+  //       }
+  //     }
+  //   `)
+  //   const { totalLiquidityUSD } = result.pancakeFactories[0]
+  //   const cakeVaultV2 = getCakeVaultAddress()
+  //   const cakeContract = getCakeContract()
+  //   const totalCakeInVault = await cakeContract.balanceOf(cakeVaultV2)
+  //   results.tvl = parseFloat(formatEther(totalCakeInVault)) * result.token.derivedUSD + parseFloat(totalLiquidityUSD)
+  // } catch (error) {
+  //   if (process.env.NODE_ENV === 'production') {
+  //     console.error('Error when fetching tvl stats', error)
+  //   }
+  // }
 
   return {
     props: results,
