@@ -1,8 +1,8 @@
 import { useCallback } from 'react'
 import { Order } from '@gelatonetwork/limit-orders-lib'
 import { BigNumber } from '@ethersproject/bignumber'
-import { Overrides } from '@ethersproject/contracts'
-import { TransactionResponse } from '@ethersproject/abstract-provider'
+import { Overrides } from 'ethers'
+import { TransactionResponse } from '@ethersproject/providers'
 
 import { useOrderActionHandlers } from 'state/limitOrders/hooks'
 import { Field, Rate } from 'state/limitOrders/types'

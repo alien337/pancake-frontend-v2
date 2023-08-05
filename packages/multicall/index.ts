@@ -1,5 +1,5 @@
 import { Interface } from '@ethersproject/abi'
-import { CallOverrides, Contract } from '@ethersproject/contracts'
+import { Contract, CallOverrides } from 'ethers'
 import { ChainId } from '@pancakeswap/sdk'
 import multicallAbi from './Multicall.json'
 

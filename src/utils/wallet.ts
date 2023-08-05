@@ -1,4 +1,5 @@
 // Set of helper functions to facilitate wallet setup
+import { Address } from 'wagmi'
 import { BAD_SRCS } from 'components/Logo/Logo'
 
 /**
@@ -22,7 +23,7 @@ export const registerToken = async (
     params: {
       type: 'ERC20',
       options: {
-        address: tokenAddress,
+        address: tokenAddress as Address,
         symbol: tokenSymbol,
         decimals: tokenDecimals,
         image,

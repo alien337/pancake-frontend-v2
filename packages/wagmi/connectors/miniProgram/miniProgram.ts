@@ -72,7 +72,7 @@ export class MiniProgramConnector extends InjectedConnector {
       method: 'eth_accounts',
     })
     // return checksum address
-    return getAddress(<string>accounts[0])
+    return <`0x${string}`>getAddress(<string>accounts[0])
   }
 
   async getChainId(): Promise<number> {

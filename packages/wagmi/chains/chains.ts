@@ -1,38 +1,9 @@
-import { mainnet, goerli } from 'wagmi/chains'
+import { mainnet, goerli, avalanche, avalancheFuji } from 'wagmi/chains'
 import { Chain } from 'wagmi'
 
-export const avalandche: Chain = {
-  id: 43114,
-  name: 'Avalanche C-Chain',
-  network: 'avalanche',
-  rpcUrls: {
-    default: 'https://rpc.ankr.com/avalanche',
-  },
-  nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
-  blockExplorers: {
-    default: {
-      name: 'snowtrace',
-      url: 'https://snowtrace.io/',
-    },
-  },
-}
+export const avalandche: Chain = avalanche
 
-export const avalandcheFuji: Chain = {
-  id: 43113,
-  name: 'Avalanche Fuji',
-  network: 'avalanche-fuji',
-  rpcUrls: {
-    default: 'https://rpc.ankr.com/avalanche_fuji',
-  },
-  nativeCurrency: { name: 'Avalanche', symbol: 'AVAX', decimals: 18 },
-  blockExplorers: {
-    default: {
-      name: 'snowtrace',
-      url: 'https://testnet.snowtrace.io/',
-    },
-  },
-  testnet: true,
-}
+export const avalandcheFuji: Chain = avalancheFuji
 
 export const fantomOpera: Chain = {
   id: 250,
@@ -40,7 +11,8 @@ export const fantomOpera: Chain = {
   network: 'fantom',
   nativeCurrency: { name: 'Fantom', symbol: 'FTM', decimals: 18 },
   rpcUrls: {
-    default: 'https://rpc.ftm.tools',
+    default: { http: ['https://rpc.ftm.tools'] },
+    public: { http: ['https://rpc.ftm.tools'] },
   },
   blockExplorers: {
     default: {
@@ -56,7 +28,8 @@ export const fantomTestnet: Chain = {
   network: 'fantom-testnet',
   nativeCurrency: { name: 'Fantom', symbol: 'FTM', decimals: 18 },
   rpcUrls: {
-    default: 'https://rpc.testnet.fantom.network',
+    default: { http: ['https://rpc.testnet.fantom.network'] },
+    public: { http: ['https://rpc.testnet.fantom.network'] },
   },
   blockExplorers: {
     default: {
@@ -74,8 +47,8 @@ export const bsc: Chain = {
   name: 'BNB Smart Chain',
   network: 'bsc',
   rpcUrls: {
-    public: 'https://bsc-dataseed1.binance.org',
-    default: 'https://bsc-dataseed1.binance.org',
+    default: { http: ['https://bsc-dataseed1.binance.org'] },
+    public: { http: ['https://bsc-dataseed1.binance.org'] },
   },
   blockExplorers: {
     default: bscExplorer,
@@ -86,9 +59,11 @@ export const bsc: Chain = {
     symbol: 'BNB',
     decimals: 18,
   },
-  multicall: {
-    address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    blockCreated: 15921452,
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 15921452,
+    },
   },
 }
 
@@ -102,15 +77,17 @@ export const bscTest: Chain = {
     symbol: 'tBNB',
   },
   rpcUrls: {
-    public: 'https://data-seed-prebsc-1-s2.binance.org:8545/',
-    default: 'https://data-seed-prebsc-1-s2.binance.org:8545/',
+    default: { http: ['https://data-seed-prebsc-1-s2.binance.org:8545/'] },
+    public: { http: ['https://data-seed-prebsc-1-s2.binance.org:8545/'] },
   },
   blockExplorers: {
     default: { name: 'BscScan', url: 'https://testnet.bscscan.com' },
   },
-  multicall: {
-    address: '0xcA11bde05977b3631167028862bE2a173976CA11',
-    blockCreated: 17422483,
+  contracts: {
+    multicall3: {
+      address: '0xcA11bde05977b3631167028862bE2a173976CA11',
+      blockCreated: 17422483,
+    },
   },
   testnet: true,
 }

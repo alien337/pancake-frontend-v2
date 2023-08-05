@@ -1,5 +1,5 @@
 import { FixedNumber } from '@ethersproject/bignumber'
-import { Contract } from '@ethersproject/contracts'
+import { Contract } from 'ethers'
 import { getFarmCakeRewardApr, SerializedFarmConfig } from '@pancakeswap/farms'
 import { ChainId, CurrencyAmount, Pair } from '@pancakeswap/sdk'
 import { BUSD, CAKE } from '@pancakeswap/tokens'

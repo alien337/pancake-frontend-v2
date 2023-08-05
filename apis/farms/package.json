@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "dependencies": {
     "@pancakeswap/farms": "*",
+    "@pancakeswap/sdk": "*",
     "itty-router": "^2.6.1",
     "itty-router-extras": "^0.4.2"
   },

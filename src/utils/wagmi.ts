@@ -1,13 +1,15 @@
-import { BinanceWalletConnector } from '@pancakeswap/wagmi/connectors/binanceWallet'
-import { bsc, bscTest, goerli } from '@pancakeswap/wagmi/chains'
-import { configureChains, createClient } from 'wagmi'
 import memoize from 'lodash/memoize'
+import { ChainId } from '@pancakeswap/sdk'
+import { bsc, bscTest, goerli } from '@pancakeswap/wagmi/chains'
+import { BinanceWalletConnector } from '@pancakeswap/wagmi/connectors/binanceWallet'
+import { configureChains, createClient } from 'wagmi'
+import { mainnet } from 'wagmi/chains'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 import { InjectedConnector } from 'wagmi/connectors/injected'
 import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
+import { SafeConnector } from 'wagmi/connectors/safe'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
-import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi'
 
 const CHAINS = [
   bsc,
@@ -18,51 +20,26 @@ const CHAINS = [
   goerli,
 ]
 
-const getNodeRealUrl = (networkName: string) => {
-  let host = null
-  switch (networkName) {
-    case 'homestead':
-      if (process.env.NEXT_PUBLIC_NODE_REAL_API_ETH) {
-        host = `eth-mainnet.nodereal.io/v1/${process.env.NEXT_PUBLIC_NODE_REAL_API_ETH}`
-      }
-      break
-    case 'goerli':
-      if (process.env.NEXT_PUBLIC_NODE_REAL_API_GOERLI) {
-        host = `eth-goerli.nodereal.io/v1/${process.env.NEXT_PUBLIC_NODE_REAL_API_GOERLI}`
-      }
-      break
-    default:
-      host = null
-  }
-
-  if (!host) {
-    return null
-  }
-
-  const url = `https://${host}`
-  return {
-    http: url,
-    webSocket: url.replace(/^http/i, 'wss').replace('.nodereal.io/v1', '.nodereal.io/ws/v1'),
-  }
+const PUBLIC_NODES = {
+  [ChainId.BSC]: 'https://bsc-dataseed1.binance.org',
+  [ChainId.BSC_TESTNET]: 'https://data-seed-prebsc-1-s1.binance.org:8545',
+  [ChainId.GOERLI]: 'https://eth-goerli.public.blastapi.io',
 }
 
 export const { provider, chains } = configureChains(CHAINS, [
   jsonRpcProvider({
     rpc: (chain) => {
-      if (!!process.env.NEXT_PUBLIC_NODE_PRODUCTION && chain.id === bsc.id) {
-        return { http: process.env.NEXT_PUBLIC_NODE_PRODUCTION }
+      if (process.env.NODE_ENV === 'test' && chain.id === mainnet.id) {
+        return { http: 'https://cloudflare-eth.com' }
       }
-      return getNodeRealUrl(chain.network) || { http: chain.rpcUrls.default }
+      return PUBLIC_NODES[chain.id] ? { http: PUBLIC_NODES[chain.id] } : { http: chain.rpcUrls.default.http[0] ?? '' }
     },
   }),
 ])
 
 export const injectedConnector = new InjectedConnector({
   chains,
-  options: {
-    shimDisconnect: false,
-    shimChainChangedDisconnect: true,
-  },
+  options: { shimDisconnect: false },
 })
 
 export const coinbaseConnector = new CoinbaseWalletConnector({
@@ -76,30 +53,41 @@ export const coinbaseConnector = new CoinbaseWalletConnector({
 export const walletConnectConnector = new WalletConnectConnector({
   chains,
   options: {
-    qrcode: true,
+    projectId: 'a8484965e51b13ed38231ce86f3ed69c',
+    metadata: {
+      name: 'SwapV2',
+      description: 'This is Swap V2 fork from pancake',
+      url: 'https://nhancv.com',
+      icons: ['https://i0.wp.com/nhancv.com/wp-content/uploads/2020/10/cropped-17565440.png'],
+    },
   },
 })
 
 export const metaMaskConnector = new MetaMaskConnector({
   chains,
-  options: {
-    shimDisconnect: false,
-    shimChainChangedDisconnect: true,
-  },
+  options: { shimDisconnect: false },
 })
 
 export const bscConnector = new BinanceWalletConnector({ chains })
+
+const safeConnector = new SafeConnector({
+  chains,
+  options: {
+    allowedDomains: [/gnosis-safe.io$/, /app.safe.global$/],
+    debug: false,
+  },
+})
 
 export const client = createClient({
   autoConnect: false,
   provider,
   connectors: [
-    new SafeConnector({ chains }),
     metaMaskConnector,
     injectedConnector,
     coinbaseConnector,
     walletConnectConnector,
     bscConnector,
+    safeConnector,
   ],
 })
 
